@@ -1,7 +1,7 @@
 module Net.TCP where
 
 -- Transmission Control Protocol
--- See http://www.networksorcery.com/enp/protocol/tcp.htm 
+-- See http://www.networksorcery.com/enp/protocol/tcp.htm
 --     http://www.networksorcery.com/enp/rfc/rfc793.txt
 
 import Kernel.Bits

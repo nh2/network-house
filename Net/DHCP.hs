@@ -4,7 +4,7 @@ module Net.DHCP where
 -- See http://www.networksorcery.com/enp/protocol/dhcp.htm
 --     http://rfc.sunsite.dk/rfc/rfc2131.html
 --     http://rfc.sunsite.dk/rfc/rfc1533.html (DHCP/BOOTP options)
- 
+
 import Kernel.Bits(Word8,Word16,Word32,testBit)
 import qualified Net.IPv4 as IP
 import qualified Net.Ethernet as Eth
@@ -99,7 +99,7 @@ magic = [99,130,83,99::Word8]
 
 instance Parse Options where
   parse = do bs <- bytes 4
-	     if bs==magic 
+	     if bs==magic
 		then Options # po
 		else return (Options [])
     where

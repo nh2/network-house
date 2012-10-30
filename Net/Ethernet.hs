@@ -70,8 +70,8 @@ instance Enum PacketType where
                         IPv6        -> 0x86DD
                         ARP         -> 0x0806
                         Unknown x   -> fromIntegral x
-                        
-instance Parse PacketType where parse = toEnum . fromIntegral # word16  
+
+instance Parse PacketType where parse = toEnum . fromIntegral # word16
 
 
 instance Parse content => Parse (Packet content) where
@@ -85,7 +85,7 @@ parse p             = let ty          = toEnum (fromIntegral (p `wordAt` 12))
                           , source    = Addr s1 s2 s3 s4 s5 s6
                           , packType  = ty
                           , content   = case ty of
-                                          Ethernet n  -> p { from = 14, len = n } 
+                                          Ethernet n  -> p { from = 14, len = n }
                                           _           -> p { from = 14, len = len p - 14 }
                           }
   where d1          = p `byteAt` 0
@@ -115,7 +115,7 @@ unparse p           = addChunk (listArray (0,13) bytes) (content p)
                                 ]
         Addr d1 d2 d3 d4 d5 d6 = dest p
         Addr s1 s2 s3 s4 s5 s6 = source p
-        ty                    = fromEnum (packType p) 
+        ty                    = fromEnum (packType p)
 
 
 

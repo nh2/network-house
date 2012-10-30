@@ -41,7 +41,7 @@ instance Show InPacket where
 
 -- | Get a byte at a certain offset.
 byteAt             :: InPacket -> Int -> Word8
-p `byteAt` x        = buffer p ! (x + from p) 
+p `byteAt` x        = buffer p ! (x + from p)
 
 -- | Get a word from a certain offset (big endian).
 wordAt             :: InPacket -> Int -> Word16
@@ -66,7 +66,7 @@ toInPack c = InPack {buffer=c,from=fst (bounds c),len=arraySize c}
 
 -- | The buffers for packets, that are to be sent over the network.
 -- Each array contains a header of a layer in the network protocol stack.
-data OutPacket = OutPack 
+data OutPacket = OutPack
                { outLen  :: !Int
                , chunks  :: ![Chunk]
                }

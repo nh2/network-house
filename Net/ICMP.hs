@@ -20,7 +20,7 @@ data Packet = EchoRequest EchoMsg
 data EchoMsg = Echo { ident       :: !Word16
                     , seqNum      :: !Word16
                     , echoData    :: UArray Int Word8
-                    } deriving Show 
+                    } deriving Show
 
 instance Parse Packet where
   parse = do (t,c,s) <- parse
@@ -33,9 +33,9 @@ instance Parse EchoMsg where parse = Echo # parse <# parse <# parse
 
 {-
 -- XXX: Assuming only Echo messages
-icmpParse              :: InPacket -> EchoMsg 
-icmpParse p             = Echo 
-                      { reply     = (p `byteAt` 0) == 0 
+icmpParse              :: InPacket -> EchoMsg
+icmpParse p             = Echo
+                      { reply     = (p `byteAt` 0) == 0
                       , ident     = p `wordAt` 4
                       , seqNum    = fromIntegral (p `wordAt` 6)
                       , echoData  = toUArray (p { from = from p + 8, len = len p - 8 })
@@ -46,7 +46,7 @@ instance Unparse Packet where unparse = unparse . icmpUnparse
 
 icmpUnparse (EchoRequest m) = echoUnparse False m
 icmpUnparse (EchoReply m) = echoUnparse True m
---icmpUnparse (Other ...) = 
+--icmpUnparse (Other ...) =
 
 echoUnparse        :: Bool -> EchoMsg -> OutPacket
 echoUnparse reply m = addChunk (array (0,7) (zip [0..] [a1,a2,a3,a4,b1,b2,b3,b4]))
@@ -93,7 +93,7 @@ instance Parse MessageType where
 
 {-
 
--- dependent type, the type determines the shape of 
+-- dependent type, the type determines the shape of
 -- code & content
 data Header         = Header
                     { msgType     :: !MessageType
@@ -109,7 +109,7 @@ data Header         = Header
 
 
 
-                    
+
 
 
 --------------------------------------------------------------------------------
@@ -148,10 +148,10 @@ data TimeExceeded   = Time_to_live_exceeded_in_transit
 -- Redirect message
 --------------------------------------------------------------------------------
 
-data RedirectMsg    = Netwrok  
+data RedirectMsg    = Netwrok
                     | Host
                     | ToS_Network
-                    | ToS_Host 
+                    | ToS_Host
 
 --------------------------------------------------------------------------------
 -- Echo & echo reply messages

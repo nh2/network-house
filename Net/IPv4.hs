@@ -35,7 +35,7 @@ andAddr   = liftA2 (.&.)
 orAddr    = liftA2 (.|.)
 complAddr = liftA1 complement
 
---instance Bits Addr where 
+--instance Bits Addr where
 -- We don't need numeric operations or shifting...
 -- It's a pity that the is only one big monolithic Bits class...
 
@@ -47,12 +47,12 @@ instance Unparse Addr where
 
 instance Show Addr where
   show (Addr a b c d)
-                    = show a ++ "." 
-                   ++ show b ++ "." 
-                   ++ show c ++ "." 
-                   ++ show d 
+                    = show a ++ "."
+                   ++ show b ++ "."
+                   ++ show c ++ "."
+                   ++ show d
 
-instance Read Addr where 
+instance Read Addr where
   readsPrec _ s = [(Addr a b c d,r)|(a,r1)<-num s,  (_,r2)<-dot r1,
 		                    (b,r3)<-num r2, (_,r4)<-dot r3,
 		                    (c,r5)<-num r4, (_,r6)<-dot r5,
@@ -62,15 +62,15 @@ instance Read Addr where
 
 -- 3 bits
 data Precedence     = Routine
-                    | Priority 
-                    | Immediate 
-                    | Flash 
-                    | Flash_Override  
-                    | CRITIC_ECP 
-                    | Internetwork_Control 
-                    | Network_Control 
+                    | Priority
+                    | Immediate
+                    | Flash
+                    | Flash_Override
+                    | CRITIC_ECP
+                    | Internetwork_Control
+                    | Network_Control
                       deriving (Show,Enum)
-                      
+
 instance Parse Precedence where
   parse = toEnum # bits 3
 
@@ -80,7 +80,7 @@ data Packet content = Packet
                     , headerLen     :: !Int{-4-} -- in units of 4 bytes
 		    , tos           :: !TypeOfService{-8-}
                     , totalLen      :: !Word16 -- in bytes
-                    , identifier    :: !Word16 
+                    , identifier    :: !Word16
                     , flags         :: !Flags{-3-}
                     , fragOff       :: !Word16{-13-}  -- in units of 8 bytes
                     , timeToLive    :: !Word8{-8-}
@@ -95,7 +95,7 @@ data TypeOfService  = TOS
                     { precedence    :: !Precedence{-3-}
                     , lowDelay      :: !Bool{-1-}
                     , highThrough   :: !Bool{-1-}
-                    , highReal      :: !Bool{-1-} 
+                    , highReal      :: !Bool{-1-}
                    -- reserved     :: Bits 2 -- should be zero
                     }
                    deriving Show
@@ -138,9 +138,9 @@ template proto src dst body =
 instance Functor   Packet where fmap f p = p { content = f (content p) }
 instance Container Packet where contents = content
 
-data Protocol       = ICMP 
+data Protocol       = ICMP
                     | TCP
-                    | UDP 
+                    | UDP
                     | Unknown !Word8
                     deriving (Show,Eq)
 
@@ -173,20 +173,20 @@ instance Unparse Protocol where
 
 -- TODO:
 data Option         = Short Word8
-                    | Long 
+                    | Long
                         { optType :: OptType
                         , optLen  :: Word8    -- includes type & self
                         , optData :: [Word8] }
 
-data OptType        = OptType 
+data OptType        = OptType
                         { optCopied :: Bool     {-1-}
                         , optClass  :: OptClass {-2-}
                         , optNumber :: Word8    {-5-}
-                        } 
+                        }
 
 data OptClass       = Control | Reserved1 | DebugMeasure | Reserved4
                       deriving Enum
-                            
+
 
 --instance Parse (Packet InPacket) where parse = ipv4parse # therest
 
@@ -199,7 +199,7 @@ instance Parse contents => Parse (Packet contents) where
        totlen <- parse    -- totalLen      :: !Int{-16-} -- in bytes
        let datalen = fromIntegral totlen - 4*hl
        Packet v hl tos totlen
-	     # parse      -- identifier    :: !Word16 
+	     # parse      -- identifier    :: !Word16
 	    <# parse      -- flags         :: !Flags{-3-}
 	    <# bits 13    -- fragOff       :: !Int{-13-}  -- in units of 8 bytes
 	    <# parse      -- timeToLive    :: !Word8{-8-}
@@ -215,19 +215,19 @@ instance Parse contents => Parse (Packet contents) where
 ipv4parse          :: InPacket -> Packet InPacket
 ipv4parse p         = let headerLen   = fromIntegral (a1 .&. 0x0F)
                           hdrByteLen  = headerLen * 4
-                          optBytes    = 4 * headerLen - 20 
+                          optBytes    = 4 * headerLen - 20
                           totLen      = fromIntegral (p `wordAt` 2)
                           a1          = p `byteAt` 0
-                          a2          = p `byteAt` 1 
+                          a2          = p `byteAt` 1
                           b34         = p `wordAt` 6
                       in Packet
-                           { version       = a1 `shiftR` 4 
-                           , headerLen     = headerLen             
+                           { version       = a1 `shiftR` 4
+                           , headerLen     = headerLen
                            , precedence    = toEnum (fromIntegral ((a2 .&. 0xE0) `shiftR` 5))
-                           , lowDelay      = a2 `testBit` 4    
+                           , lowDelay      = a2 `testBit` 4
                            , highThrough   = a2 `testBit` 3
                            , highReal      = a2 `testBit` 2
-                           , totalLen      = totLen 
+                           , totalLen      = totLen
                            , identifier    = p `wordAt` 4
                            , don'tFrag     = b34 `testBit` 14
                            , moreFrags     = b34 `testBit` 13
@@ -255,8 +255,8 @@ ipv4unparse p       = addChunk realHeader (content p)
         tL          = hL * 4 + outLen (content p)
 
         realHeader  = listArray (0,hL * 4 - 1) (header c3 c4)
-        header c3 c4 = 
-                     [ a1 , a2 , a3 , a4 
+        header c3 c4 =
+                     [ a1 , a2 , a3 , a4
                      , b1 , b2 , b3 , b4
                      , c1 , c2 , c3 , c4
                      , d1 , d2 , d3 , d4
@@ -274,8 +274,8 @@ ipv4unparse p       = addChunk realHeader (content p)
         a1          = (4 `shiftL` 4) .|. (fromIntegral hL .&. 0x0F)
         a2          = bit 4 (lowDelay t)
                     $ bit 3 (highThrough t)
-                    $ bit 2 (highReal t) 
-                    $ (fromIntegral (fromEnum (precedence t)) `shiftL` 5) 
+                    $ bit 2 (highReal t)
+                    $ (fromIntegral (fromEnum (precedence t)) `shiftL` 5)
         a3          = tL .!. 1
         a4          = tL .!. 0
 
@@ -286,7 +286,7 @@ ipv4unparse p       = addChunk realHeader (content p)
         b3          = bit 6 (don'tFrag f)
                     $ bit 5 (moreFrags f)
                     $ (fragOff p .!. 1)
-        b4          = fragOff p .!. 0  
+        b4          = fragOff p .!. 0
 
         -- 3
         c1          = fromIntegral (timeToLive p)
@@ -296,7 +296,7 @@ ipv4unparse p       = addChunk realHeader (content p)
 
         -- 4
         Addr d1 d2 d3 d4  = source p
-        
+
         -- 5
         Addr e1 e2 e3 e4  = dest p
 

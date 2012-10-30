@@ -3,7 +3,7 @@ module Net.TCP_Client(
   ) where
 
 -- Transmission Control Protocol
--- See http://www.networksorcery.com/enp/protocol/tcp.htm 
+-- See http://www.networksorcery.com/enp/protocol/tcp.htm
 --     http://www.networksorcery.com/enp/rfc/rfc793.txt
 
 import Net.Concurrent
@@ -324,7 +324,7 @@ established c debugIO deliver io flowctl (rxseq,txseq,txwin) =
     sendData dat =
         do s@S{txSeq=seq,now=t,unackedData=ps} <- get
 	   let l=fromIntegral (outLen dat)
-	   when (l>0) $ 
+	   when (l>0) $
 	       do sendData' dat seq
                   put s{txSeq=seq+l,unackedData=ps++[(seq,t,dat)]}
 	          --debug $ "Sent "++show l++" bytes upto "++show (seq+l)
@@ -362,7 +362,7 @@ established c debugIO deliver io flowctl (rxseq,txseq,txwin) =
 		do debug "(Delayed) unblocking client..."
 		   putMVar flowctl ()
 		   debug "(Delayed) unblocked client"
-		   
+
            --}
            {-
 	   when (l>0 || q>0) $

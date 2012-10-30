@@ -27,7 +27,7 @@ tftpGet debug udp serverIP filename mode =
 	 case p of
 	   Nothing -> return $ Left "Timeout"
            Just (Data nr b) ->
-	       if nr==last+1 
+	       if nr==last+1
 	       then if arraySize b<512
 		    then do Net.txT tftp (Ack nr)
 			    return (Right (reverse (b:bs)))
@@ -125,7 +125,7 @@ initialize udp serverIP =
             where
               udpP sPort = UDP.template port sPort bs
               bs = doUnparse msg
-						    
+
      return (Net.TimedInterface rx tx,unlisten udp port)
 
 serverPort = Port.tftp -- standard TFTP server port

@@ -20,7 +20,7 @@ b1 `nextTo` b2          = (fromIntegral b1 `shiftL` bitSize b2) .|. fromIntegral
 
 catBits bs              = cat bs 0
   where cat [] a        = a
-        cat (b:bs) a    = cat bs ((a `shiftL` size) .|. fromIntegral b) 
+        cat (b:bs) a    = cat bs ((a `shiftL` size) .|. fromIntegral b)
         size            = bitSize (head bs)
 
 

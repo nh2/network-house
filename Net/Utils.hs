@@ -38,7 +38,7 @@ foldlArray             :: (IArray arr elem, Ix ix, Enum ix)
 foldlArray arr add zero = loop min zero
   where
   (min,max)             = bounds arr
-  loop ix tot       
+  loop ix tot
     | ix <= max         = loop (succ ix) (add (arr ! ix) tot)
     | otherwise         = tot
 
@@ -54,7 +54,7 @@ checksum arr            = let total   = foldlArray arr add (0 :: Word32)
                               add x t = fromIntegral x + t
                           in complement ((total .!. 1) + (total .!. 0))
 -}
-    
+
 
 -- | TCP\/IP 16-bit checksums
 checksum                 :: [Word16] -> Word16
@@ -74,10 +74,10 @@ pairs a                   = unfoldr mk
 
 
 bytes_to_words_big       :: [Word8] -> [Word16]
-bytes_to_words_big        = map catBits . pairs 0 
+bytes_to_words_big        = map catBits . pairs 0
 
 bytes_to_words_lil       :: [Word8] -> [Word16]
-bytes_to_words_lil        = map (catBits . reverse) . pairs 0 
+bytes_to_words_lil        = map (catBits . reverse) . pairs 0
 
 words_to_bytes_big       :: [Word16] -> [Word8]
 words_to_bytes_big ws     = concat [ [w .!. 1, w .!. 0] | w <- ws ]

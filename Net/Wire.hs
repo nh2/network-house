@@ -7,7 +7,7 @@ type Wire m a = Interface m a a
 
 -- | An unbounded buffer
 --unbounded :: ChannelIO c m => m (Wire m a)
-unbounded () = 
+unbounded () =
    do channel <- newChan
       return Interface{rx=readChan channel,tx=writeChan channel}
 

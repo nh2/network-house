@@ -41,7 +41,7 @@ initialize putStrLn config eth =
 		       dump  = ARP.dump arp,
 		       udp  = udpclient,
 		       tcp  = tcpclient }
-       fork $ udpEchoServer putStrLn net 
+       fork $ udpEchoServer putStrLn net
        fork $ tcpEchoServer putStrLn net
        return (iconfig,net)
 
@@ -57,7 +57,7 @@ icmpHandler putStrLn myIP iface =
   where
     txIP = Net.tx iface
     icmpCallback ipPack =
-      let icmpPack = IP.content ipPack in 
+      let icmpPack = IP.content ipPack in
       case icmpPack of
 	ICMP.EchoRequest echoMsg ->
             do putStrLn $ "Replying to ping from "++show srcIP

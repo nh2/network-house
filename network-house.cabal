@@ -5,6 +5,10 @@ license-file:        LICENSE
 author:              The House Authors
 maintainer:          Niklas Hambüchen <mail@nh2.me>
 category:            Network
+stability:           experimental
+bug-reports:         https://github.com/nh2/network-house/issues
+homepage:            https://github.com/nh2/network-house
+
 build-type:          Simple
 cabal-version:       >=1.8
 synopsis:            data and parsers for Ethernet, TCP, UDP, IPv4, IPv6, ICMP, DHCP, TFTP
@@ -14,6 +18,10 @@ description:
                      Provides data structures and parsers for Ethernet, TCP, UDP, IPv4, IPv6, ICMP, DHCP and TFTP packets as well as some server implementations.
                      .
                      This package was extracted from house due to the lack of existing network package parsing libraries.
+
+source-repository head
+  type: git
+  location: https://github.com/nh2/network-house
 
 library
   exposed-modules:

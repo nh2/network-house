@@ -1,3 +1,5 @@
+{-# LANGUAGE MultiParamTypeClasses, TypeSynonymInstances, FlexibleInstances #-}
+
 module Net.IO(module Net) where
 import qualified Control.Concurrent as IO
 import Data.IORef

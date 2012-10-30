@@ -1,3 +1,5 @@
+{-# LANGUAGE MultiParamTypeClasses, FunctionalDependencies, FlexibleInstances, FlexibleContexts, UndecidableInstances #-}
+
 -- | Concurrency primitives abstracted away from the IO monad
 module Net.Concurrent where
 import Control.Monad.Trans

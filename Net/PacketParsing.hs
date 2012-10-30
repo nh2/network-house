@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 module Net.PacketParsing(
   PacketParser,InPacket,doParse,parseInPacket,( #!),( # ),(<# ),
   Parse(..),

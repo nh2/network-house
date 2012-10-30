@@ -34,7 +34,6 @@ library
     , Net.DHCP_Client
     , Net.Ethernet
     , Net.EthernetClient
-    -- , Net.H
     , Net.ICMP
     , Net.Interface
     , Net.IO
@@ -47,7 +46,6 @@ library
     , Net.PacketParsing
     , Net.PortNumber
     , Net.Servers
-    -- , Net.Shell
     , Net.TCP
     , Net.TCP_Client
     , Net.Test

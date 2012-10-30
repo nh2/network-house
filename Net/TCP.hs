@@ -4,7 +4,7 @@ module Net.TCP where
 -- See http://www.networksorcery.com/enp/protocol/tcp.htm
 --     http://www.networksorcery.com/enp/rfc/rfc793.txt
 
-import Kernel.Bits
+import Net.Bits
 import Net.PacketParsing
 import Net.PortNumber(Port(..))
 import Net.Utils(Container(..))

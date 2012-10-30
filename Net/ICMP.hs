@@ -3,7 +3,7 @@ module Net.ICMP where
 -- Internet Control Message Protocol
 -- http://rfc.net/rfc792.html
 
-import Kernel.Bits
+import Net.Bits
 import Net.Utils
 import Net.Packet
 import Net.PacketParsing

@@ -6,7 +6,7 @@ module Net.PacketParsing(
   ) where
 import Control.Monad(liftM,MonadPlus(..))
 import Net.Packet
-import Kernel.Bits
+import Net.Bits
 import Monad.Util
 
 class Parse a where parse :: PacketParser a

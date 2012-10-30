@@ -3,7 +3,7 @@ module Net.ARP where
 -- Address Resolution Protocol, limited to IPv4 over Ethernet
 -- See http://www.networksorcery.com/enp/protocol/arp.htm
 
-import Kernel.Bits(Word8,Word16)
+import Net.Bits(Word8,Word16)
 import Net.Ethernet as Eth(Addr)
 import Net.IPv4 as IPv4(Addr)
 import Net.PacketParsing

@@ -1,4 +1,4 @@
-module Kernel.Bits (module Kernel.Bits, module Data.Bits, module Data.Word) where
+module Net.Bits (module Net.Bits, module Data.Bits, module Data.Word) where
 
 import Data.Bits
 import Data.Word

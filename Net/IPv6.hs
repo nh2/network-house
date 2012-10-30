@@ -3,7 +3,7 @@ module Net.IPv6 where
 -- IPv6, Internet Protocol version 6
 -- See http://www.networksorcery.com/enp/protocol/ipv6.htm
 
-import Kernel.Bits
+import Net.Bits
 import Net.IPv4(Protocol)
 import Net.PacketParsing
 

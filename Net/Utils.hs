@@ -2,7 +2,7 @@
 module Net.Utils where
 
 import Net.Concurrent
-import Kernel.Bits
+import Net.Bits
 import Data.List(unfoldr)
 import Data.Array.IArray
 

@@ -1,6 +1,6 @@
 -- | Port numbers (used by UDP and TCP) and some standard port numbers
 module Net.PortNumber where
-import Kernel.Bits(Word16)
+import Net.Bits(Word16)
 import Net.PacketParsing
 
 newtype Port = Port Word16 deriving (Eq,Ord,Bounded,Show) -- Enum

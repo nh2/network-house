@@ -5,7 +5,7 @@ module Net.DHCP where
 --     http://rfc.sunsite.dk/rfc/rfc2131.html
 --     http://rfc.sunsite.dk/rfc/rfc1533.html (DHCP/BOOTP options)
 
-import Kernel.Bits(Word8,Word16,Word32,testBit)
+import Net.Bits(Word8,Word16,Word32,testBit)
 import qualified Net.IPv4 as IP
 import qualified Net.Ethernet as Eth
 import Net.PacketParsing

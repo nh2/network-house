@@ -4,7 +4,7 @@ module Net.TFTP where
 -- See http://www.networksorcery.com/enp/protocol/tftp.htm
 --     http://www.networksorcery.com/enp/rfc/rfc1350.txt
 
-import Kernel.Bits
+import Net.Bits
 import Net.Packet
 import Net.PacketParsing
 

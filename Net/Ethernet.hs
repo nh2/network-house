@@ -5,7 +5,7 @@ module Net.Ethernet where
 --            http://www.iana.org/assignments/ethernet-numbers
 
 import Data.List(intersperse)
-import Kernel.Bits
+import Net.Bits
 import Net.Packet
 import Net.PacketParsing as P
 import qualified Net.Interface as Net

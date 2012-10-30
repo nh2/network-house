@@ -6,7 +6,7 @@ module Net.Packet (module Data.Array.Unboxed,Word8,
 		   splitOutPack,outBytes,loopback,loopbackout
 		  ) where
 
-import Kernel.Bits
+import Net.Bits
 import Data.Array.Unboxed
 import Net.Utils
 

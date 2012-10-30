@@ -5,7 +5,7 @@ module Net.UDP(module Net.UDP,Port(..)) where
 
 import Net.PacketParsing
 import Net.Packet(outLen)
-import Kernel.Bits(Word16)
+import Net.Bits(Word16)
 import Net.PortNumber(Port(..))
 import Net.Utils(Container(..))
 

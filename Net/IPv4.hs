@@ -4,7 +4,7 @@ module Net.IPv4 where
 -- reference: http://rfc.net/std0005.html
 
 import Data.Char
-import Kernel.Bits
+import Net.Bits
 import Net.Utils
 import Net.Packet
 import Net.PacketParsing

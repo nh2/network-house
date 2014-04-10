@@ -6,7 +6,8 @@ module Net.PacketParsing(
   bytes,bits,word8,word16,word32,check8,check16,check,lift,therest,trunc,
   Unparse(..),OutPacket,doUnparse
   ) where
-import Control.Monad(liftM,MonadPlus(..))
+import Control.Applicative (Applicative(..), Alternative(..))
+import Control.Monad(liftM,MonadPlus(..),ap)
 import Net.Packet
 import Net.Bits
 import Monad.Util
@@ -30,6 +31,10 @@ parseInPacket (P parser) p =
 
 instance Functor PacketParser where fmap = liftM
 
+instance Applicative PacketParser where
+  pure = return
+  (<*>) = ap
+
 instance Monad PacketParser where
   return x = P $ \ p -> return (Out x p)
   P pa >>= xpb = P $ \ p0 -> do Out x p1 <-pa p0
@@ -39,6 +44,10 @@ instance Monad PacketParser where
 instance MonadPlus PacketParser where
   mzero = fail "no matching alternative"
   P p1 `mplus` P p2 = P $ \ p -> p1 p `mplus` p2 p
+
+instance Alternative PacketParser where
+  empty = mzero
+  (<|>) = mplus
 
 instance Parse InPacket where parse = therest
 instance Parse (UArray Int Word8) where parse = toChunk # therest

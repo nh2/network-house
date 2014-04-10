@@ -59,7 +59,9 @@ checksum arr            = let total   = foldlArray arr add (0 :: Word32)
 -- | TCP\/IP 16-bit checksums
 checksum                 :: [Word16] -> Word16
 checksum ws               = let total = sum (map fromIntegral ws) :: Word32
-                            in complement (fromIntegral total + fromIntegral (total `shiftR` 16))
+                                summed1 = fromIntegral total + fromIntegral (total `shiftR` 16) :: Word32
+                                summed2 = fromIntegral summed1 + fromIntegral (summed1 `shiftR` 16) :: Word32
+                            in complement (fromIntegral summed1)
 
 
 

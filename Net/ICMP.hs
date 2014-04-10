@@ -8,6 +8,8 @@ import Net.Utils
 import Net.Packet
 import Net.PacketParsing
 
+import Debug.Trace
+
 data Packet = EchoRequest EchoMsg
 	    | EchoReply EchoMsg
 	    | Other { type_    :: !MessageType,
@@ -42,22 +44,26 @@ icmpParse p             = Echo
                       }
 -}
 
-instance Unparse Packet where unparse = unparse . icmpUnparse
+xtrace s = trace (show ("xtrace", s)) s
+
+instance Unparse Packet where unparse x = trace "unparse packet" $ unparse (icmpUnparse x)
 
 icmpUnparse (EchoRequest m) = echoUnparse False m
 icmpUnparse (EchoReply m) = echoUnparse True m
 --icmpUnparse (Other ...) =
 
 echoUnparse        :: Bool -> EchoMsg -> OutPacket
-echoUnparse reply m = addChunk (array (0,7) (zip [0..] [a1,a2,a3,a4,b1,b2,b3,b4]))
-                    $ addChunk (echoData m)
-                    $ emptyOutPack
+echoUnparse reply m = let z = addChunk (array (0,7) (zip [0..] [a1,a2,a3,a4,b1,b2,b3,b4]))
+                              $ addChunk (echoData m)
+                              $ emptyOutPack
+                       in mytrace z
   where a1          = if reply then 0 else 8
         a2          = 0
         (a3,a4)     = (check .!. 1, check .!. 0)
         (b1,b2)     = (ident m .!. 1, ident m .!. 0)
         (b3,b4)     = (seqNum m .!. 1, seqNum m .!. 0)
-        check       = checksum $ bytes_to_words_big ([a1,a2,0,0,b1,b2,b3,b4] ++ elems (echoData m))
+        check       = trace (show ('x', (echoData m))) $ checksum $ bytes_to_words_big ([a1,a2,0,0,b1,b2,b3,b4] ++ elems (echoData m))
+        mytrace pack = trace (show ("chunks", chunks pack)) pack
 
 
 

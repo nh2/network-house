@@ -11,6 +11,8 @@ import Net.Packet
 import Net.Bits
 import Monad.Util
 
+import Debug.Trace
+
 class Parse a where parse :: PacketParser a
 
 
@@ -188,7 +190,8 @@ instance Unparse Word32 where
           b4 = w .!. 0
 
 instance Unparse OutPacket where
-  unparse p unp = Unp 0 [] (appendOutPack (flush unp) p) -- !!
+  unparse p unp = let x = Unp 0 [] (appendOutPack (flush unp) p) -- !!
+                   in trace (show ("Unparse outpacket", appendOutPack (flush unp) p)) x
 
 flush (Unp cnt bs ps) = addChunk (listArray (0,cnt-1) bs) ps
 chunk = Unp 0 [] . flush

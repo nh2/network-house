@@ -47,6 +47,13 @@ initialize putStrLn myIP iface =
   where
     debug = putStrLn . ("UDP: "++)
 
+-- I copied this type signature ghci.
+server :: (Eq (r ()), RefIO r m, ChannelIO c m, DelayIO m, ForkIO m)
+       => ([Char] -> m ())
+       -> IPv4.Addr
+       -> Net.Interface m i (IPv4.Packet (Packet OutPacket))
+       -> c (Req m)
+       -> m a
 server debug myIP iface reqChan =
     flip evalStateT init $ loop (handle=<<readChan reqChan)
   where

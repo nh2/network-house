@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 module Net.UDP_Client(
     initialize,UDP_API,Interface(..),Packet(..),template,Port(..)
   ) where

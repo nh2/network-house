@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 module Net.TCP_Client(
     initialize,Active(..),tx,rx,Passive(..),Interface(..),Peer,Port(..)
   ) where

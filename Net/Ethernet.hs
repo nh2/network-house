@@ -77,6 +77,8 @@ instance Parse PacketType where parse = toEnum . fromIntegral # word16
 instance Parse content => Parse (Packet content) where
   parse = Packet # parse <# parse <# parse <# parse
 
+-- Unparse instance required previous unparse function to be
+-- renamed etherUnparse.
 instance (Unparse content) => Unparse (Packet content) where
   unparse p = unparse.etherUnparse $ fmap doUnparse p
 
@@ -110,6 +112,9 @@ parse p             = let ty          = toEnum (fromIntegral (p `wordAt` 12))
 
 -- Packets should be paddded elsewhere to satisfy minimum length requirement
 -- (46 bytes of data, 64 bytes including headers and CRC)
+
+-- This use to be called unparse. unparse is now used in the
+-- Unparse instance definition.
 etherUnparse            :: Packet OutPacket -> OutPacket
 etherUnparse p           = addChunk (listArray (0,13) bytes) (content p)
   where bytes                 = [ d1, d2, d3, d4, d5, d6

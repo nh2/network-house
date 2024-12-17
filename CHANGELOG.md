@@ -1,3 +1,8 @@
+0.1.0.3
+-------
+
+- Fixed compilation with GHC 9.8.4
+
 0.1.0.2
 -------
 

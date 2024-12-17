@@ -32,13 +32,14 @@ parseInPacket (P parser) p =
 instance Functor PacketParser where fmap = liftM
 
 instance Applicative PacketParser where
-  pure = return
+  pure x = P $ \ p -> return (Out x p)
   (<*>) = ap
 
 instance Monad PacketParser where
-  return x = P $ \ p -> return (Out x p)
   P pa >>= xpb = P $ \ p0 -> do Out x p1 <-pa p0
 				unP (xpb x) p1
+
+instance MonadFail PacketParser where
   fail s = P $ \ _ -> fail s
 
 instance MonadPlus PacketParser where

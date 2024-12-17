@@ -9,6 +9,7 @@ module Net.TCP_Client(
 --     http://www.networksorcery.com/enp/rfc/rfc793.txt
 
 import Net.Concurrent
+import Control.Monad(when)
 import Control.Monad.State
 import Control.Monad.Trans(lift)
 import Data.Map (Map)

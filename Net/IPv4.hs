@@ -31,8 +31,8 @@ liftA1 f (Addr b1 b2 b3 b4) = Addr (f b1) (f b2) (f b3) (f b4)
 liftA2 f (Addr a1 a2 a3 a4) (Addr b1 b2 b3 b4) =
   Addr (f a1 b1) (f a2 b2) (f a3 b3) (f a4 b4)
 
-andAddr   = liftA2 (.&.)
-orAddr    = liftA2 (.|.)
+andAddr   = Net.IPv4.liftA2 (.&.)
+orAddr    = Net.IPv4.liftA2 (.|.)
 complAddr = liftA1 complement
 
 --instance Bits Addr where
